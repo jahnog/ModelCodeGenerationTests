@@ -1,0 +1,7 @@
+{
+  "name": "modeltests-compiler",
+  "private": true,
+  "dependencies": {
+    "typescript": "7.0.2"
+  }
+}

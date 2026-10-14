@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Model tests</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <p class="eyebrow">Coding agents</p>
+    <h1>Model tests</h1>
+    <p id="task" class="task">One task, several agents, several instructions.</p>
+    <details id="constraints-wrap">
+      <summary>Constraints sent with every prompt</summary>
+      <pre id="constraints"></pre>
+    </details>
+    <nav class="views">
+      <a href="#/matrix" id="nav-matrix">Matrix</a>
+      <a href="#/table" id="nav-table">Table</a>
+    </nav>
+  </header>
+  <section id="controls" class="controls" hidden>
+    <label>Agent <select id="filter-agent"></select></label>
+    <label>Model <select id="filter-model"></select></label>
+    <label>Effort <select id="filter-effort"></select></label>
+    <label>Family <select id="filter-family"></select></label>
+    <label>Color <select id="color-metric">
+      <option value="source_lines">Lines</option>
+      <option value="total_time_seconds">Time</option>
+      <option value="total_tokens">Tokens</option>
+    </select></label>
+  </section>
+  <section id="strip" class="strip"></section>
+  <main id="view"></main>
+  <script src="app.js"></script>
+</body>
+</html>

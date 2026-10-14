@@ -1,0 +1,111 @@
+timeout_seconds: 600
+task:
+  id: shopping-cart
+  text: |
+    Make a TypeScript program for a shopping cart. The program adds an item to the shopping cart. The program shows the items in the shopping cart. The program removes an item from the shopping cart.
+constraints: |
+  Write every file in the current directory. Do not use sudo and do not change anything outside this directory.
+  The code must typecheck with TypeScript 7.0.2, strict, target ES2022, module ESNext, and moduleResolution bundler.
+  Write .ts files only. Do not write JSX. Do not import a package or a Node built-in module.
+  A relative import does not need a file extension.
+  Put an export in every .ts file so TypeScript treats the file as a module.
+variants:
+  - id: grok-medium
+    agent: grok
+    label: Grok Build
+    model: grok-4.7
+    effort: medium
+    enabled: true
+  - id: claude-medium
+    agent: claude
+    label: Claude Code
+    model: opus
+    effort: medium
+    enabled: true
+  - id: cursor-composer
+    agent: cursor
+    label: Cursor Agent
+    model: composer-2.5
+    effort: default
+    enabled: true
+suffixes:
+  - id: none
+    family: baseline
+    label: None
+    text: ""
+    enabled: true
+  - id: simple
+    family: baseline
+    label: Simple
+    text: "generate code as simple as possible"
+    enabled: true
+  - id: clean-code
+    family: baseline
+    label: Clean code
+    text: "follow clean code."
+    enabled: true
+  - id: typescript
+    family: baseline
+    label: TypeScript
+    text: "follow typescript best practices."
+    enabled: true
+  - id: clean-architecture
+    family: architecture
+    label: Clean architecture
+    text: "follow clean architecture"
+    enabled: true
+  - id: hexagonal
+    family: architecture
+    label: Hexagonal
+    text: "follow hexagonal architecture."
+    enabled: true
+  - id: onion
+    family: architecture
+    label: Onion
+    text: "follow onion architecture."
+    enabled: true
+  - id: layered
+    family: architecture
+    label: Layered
+    text: "follow layered architecture."
+    enabled: true
+  - id: mvc
+    family: architecture
+    label: MVC
+    text: "follow mvc."
+    enabled: true
+  - id: vertical-slice
+    family: architecture
+    label: Vertical slice
+    text: "follow vertical slice architecture."
+    enabled: true
+  - id: ddd
+    family: domain
+    label: DDD
+    text: "follow ddd."
+    enabled: true
+  - id: cqrs
+    family: domain
+    label: CQRS
+    text: "follow cqrs."
+    enabled: true
+  - id: event-driven
+    family: domain
+    label: Event-driven
+    text: "follow an event-driven architecture."
+    enabled: true
+  - id: solid
+    family: principles
+    label: SOLID
+    text: "follow solid."
+    enabled: true
+  - id: functional
+    family: principles
+    label: Functional
+    text: "use a functional style."
+    enabled: true
+  - id: tdd
+    family: principles
+    label: TDD
+    text: "use test-driven development."
+    enabled: true

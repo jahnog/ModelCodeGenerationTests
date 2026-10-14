@@ -1,0 +1,182 @@
+:root {
+  color: #1c1915;
+  background: #f3efe4;
+  font-family: "Iowan Old Style", Palatino, "Palatino Linotype", Georgia, serif;
+  font-size: 17px;
+  line-height: 1.45;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 1.25rem 1.5rem 3rem;
+}
+
+h1, h2, h3 { font-weight: 600; line-height: 1.2; }
+
+h1 { margin: 0; font-size: 2rem; }
+
+a { color: #204034; }
+
+.eyebrow {
+  margin: 0;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-family: "Source Sans 3", "Segoe UI", sans-serif;
+  font-size: 0.75rem;
+}
+
+.task { max-width: 46rem; }
+
+.views { display: flex; gap: 1rem; }
+
+.views a {
+  font-family: "Source Sans 3", "Segoe UI", sans-serif;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+}
+
+.views a[aria-current="page"] { border-bottom-color: #204034; }
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  margin: 1rem 0;
+  font-family: "Source Sans 3", "Segoe UI", sans-serif;
+}
+
+select {
+  font: inherit;
+  margin-left: 0.35rem;
+  background: #fffdf8;
+  color: inherit;
+  border: 1px solid #cfc4b2;
+  border-radius: 4px;
+  padding: 0.15rem 0.3rem;
+}
+
+.nums { font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; }
+
+.strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.strip article, .cards article {
+  background: #fffdf8;
+  border: 1px solid #ddd4c4;
+  border-radius: 8px;
+  padding: 0.6rem 0.8rem;
+  min-width: 8rem;
+}
+
+.strip h2, .cards h2 {
+  margin: 0;
+  font-family: "Source Sans 3", "Segoe UI", sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.figure { margin: 0.15rem 0; font-size: 1.35rem; }
+
+.note { max-width: 46rem; color: #453f36; }
+
+.matrix-wrap { overflow: auto; border: 1px solid #ddd4c4; border-radius: 8px; }
+
+table { border-collapse: collapse; width: 100%; background: #fffdf8; }
+
+th, td {
+  border-bottom: 1px solid #eadfce;
+  padding: 0.45rem 0.55rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  font-family: "Source Sans 3", "Segoe UI", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.sticky {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: #f7f3ea;
+  box-shadow: 1px 0 0 #ddd4c4;
+  min-width: 9rem;
+}
+
+.agent, .model, .effort { display: block; }
+.model, .effort { color: #5c564c; font-size: 0.92rem; }
+
+.family { text-align: center; background: #f7f3ea; }
+
+.cell a { color: inherit; text-decoration: none; display: block; }
+.cell a:hover { text-decoration: underline; }
+
+.metric { margin: 0; font-size: 0.92rem; }
+.metric span { color: #5c564c; }
+
+.heat { background: rgba(122, 72, 28, var(--heat, 0.2)); }
+
+.chips { display: flex; flex-wrap: wrap; gap: 0.25rem; margin-top: 0.35rem; }
+
+.chip {
+  font-family: "Source Sans 3", "Segoe UI", sans-serif;
+  font-size: 0.72rem;
+  border: 1px solid #cfc4b2;
+  border-radius: 999px;
+  padding: 0.05rem 0.4rem;
+  background: #fffdf8;
+}
+
+.chip.pass { background: #e5f0e4; border-color: #8eae88; }
+.chip.fail { background: #f6e4d8; border-color: #c4896a; }
+.chip.sample, .chip.stale, .chip.timeout, .chip.error { background: #f7f3ea; }
+
+.cards { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 1rem 0; }
+
+.days { padding-left: 1.2rem; }
+.days a[aria-current="page"] { font-weight: 700; }
+
+pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  background: #fffdf8;
+  border: 1px solid #ddd4c4;
+  border-radius: 8px;
+  padding: 0.8rem;
+  font-family: "IBM Plex Mono", "ui-monospace", monospace;
+  font-size: 0.85rem;
+}
+
+.checklist { list-style: none; padding: 0; }
+.checklist li { padding: 0.1rem 0; }
+
+.empty, .missing {
+  background: #fffdf8;
+  border: 1px solid #ddd4c4;
+  border-radius: 8px;
+  padding: 1rem 1.1rem;
+  max-width: 40rem;
+}
+
+button.linkish {
+  font: inherit;
+  color: #204034;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+.tree { list-style: none; padding: 0; }
+.tree li { padding: 0.12rem 0; }
+.binary { color: #5c564c; }

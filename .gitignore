@@ -1,0 +1,17 @@
+runs/
+output-code/
+compiler/node_modules/
+.env
+.env.*
+*.pem
+*.key
+id_rsa
+id_ed25519
+credentials.json
+.grok/
+.claude/
+.cursor/
+__pycache__/
+.pytest_cache/
+.venv/
+*.pyc
