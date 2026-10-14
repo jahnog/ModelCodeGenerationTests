@@ -1,0 +1,218 @@
+{
+  "slug": "grok-grok-4-7-xhigh-ddd-2026-10-14",
+  "variant_id": "grok-xhigh",
+  "suffix_id": "ddd",
+  "agent": "grok",
+  "label": "Grok Build",
+  "model": "grok-4.7",
+  "effort": "xhigh",
+  "reported_model": "grok-4.7-build",
+  "family": "domain",
+  "suffix_label": "DDD",
+  "date": "2026-10-14",
+  "sample": false,
+  "stale": false,
+  "status": "complete",
+  "prompt": "Make a TypeScript program for a shopping cart. The program adds an item to the shopping cart. The program shows the items in the shopping cart. The program removes an item from the shopping cart.\n\nfollow ddd.\n\nWrite every file in the current directory. Do not use sudo and do not change anything outside this directory.\nThe code must typecheck with TypeScript 7.0.2, strict, target ES2022, module ESNext, and moduleResolution bundler.\nWrite .ts files only. Do not write JSX. Do not import a package or a Node built-in module.\nA relative import does not need a file extension.\nPut an export in every .ts file so TypeScript treats the file as a module.",
+  "final_text": "I'll build a Domain-Driven Design shopping cart in TypeScript in this directory, and I'll check the project constraints and the unit-test skill before writing any files.The directory is empty and the test skill does not apply here. I'll look up the task spec so the shopping-cart design matches the expected DDD shape.The cart will be a domain model: an aggregate that protects its own rules, with use cases for add, show, and remove. I'll put that structure in this directory and typecheck it with TypeScript 7.0.2.The files are in place. Next I\u2019ll typecheck them with the pinned TypeScript 7.0.2 settings and clean up the cart text formatter.The shopping cart is a Domain-Driven Design program in this directory. It adds items, shows them, and removes them.\n\n`ShoppingCart` is the aggregate. It keeps one line per product, merges a repeated add into that line, and rejects a mismatched price, a second currency, or a removal of a product that is not there. Prices and quantities are value objects. Adding or removing an item records a domain event. Application use cases load the cart, call the aggregate, save it, and publish those events.\n\nRunning it adds 2 green teas and 1 rye bread, then adds 1 more tea:\n\n```text\nShopping cart cart-1 (2 lines, 4 units)\n3 x Green tea (sku-tea) at 3.50 EUR, subtotal 10.50 EUR\n1 x Rye bread (sku-bread) at 2.20 EUR, subtotal 2.20 EUR\nTotal: 12.70 EUR\n\nShopping cart cart-1 (1 line, 3 units)\n3 x Green tea (sku-tea) at 3.50 EUR, subtotal 10.50 EUR\nTotal: 10.50 EUR\nProduct \"sku-bread\" is not in the cart.\n```\n\nTypecheck with TypeScript 7.0.2 passed under `strict`, `target ES2022`, `module ESNext`, and `moduleResolution bundler`. The run above used a temporary CommonJS build that was deleted afterward.",
+  "global_rules_present": true,
+  "total_time_seconds": 527.142,
+  "cli_duration_ms": null,
+  "total_tokens": 807530,
+  "total_tokens_source": "summed_parts",
+  "token_parts": {
+    "input": 73325,
+    "output": 40267,
+    "cache_read": 662784,
+    "cache_write": 0,
+    "reasoning": 31154
+  },
+  "cost_usd": 0.24467896,
+  "turn_count": 15,
+  "final_text_chars": 1743,
+  "compile_status": "pass",
+  "compile_error_count": 0,
+  "compile_seconds": 0.352,
+  "typescript_version": "7.0.2",
+  "diagnostics": [],
+  "compiler_options": [
+    "strict",
+    "target ES2022",
+    "module ESNext",
+    "moduleResolution bundler",
+    "noEmit",
+    "incremental false"
+  ],
+  "source_lines": 639,
+  "test_lines": 0,
+  "doc_lines": 0,
+  "file_count": 20,
+  "directory_count": 14,
+  "max_depth": 2,
+  "scans": {
+    "function": 7,
+    "class": 15,
+    "interface": 10,
+    "type": 30,
+    "enum": 0
+  },
+  "dependencies": [],
+  "dev_dependencies": [],
+  "checklist": {
+    "tests": false,
+    "readme": false,
+    "other_markdown": false,
+    "package_json": false,
+    "lockfile": false,
+    "tsconfig": false,
+    "eslint": false,
+    "prettier": false,
+    "ci": false,
+    "dockerfile": false
+  },
+  "top_dirs": [
+    "application",
+    "domain",
+    "infrastructure",
+    "presentation"
+  ],
+  "names_found": [
+    "domain",
+    "application",
+    "infrastructure",
+    "entity",
+    "use-case",
+    "event"
+  ],
+  "imports": [],
+  "error_text": "",
+  "files": [
+    {
+      "path": "application/dto/shown-cart.ts",
+      "bytes": 472,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "application/error/cart-not-found.ts",
+      "bytes": 365,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "application/use-case/add-item-to-cart.ts",
+      "bytes": 1474,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "application/use-case/remove-item-from-cart.ts",
+      "bytes": 1072,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "application/use-case/show-cart-items.ts",
+      "bytes": 1602,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "domain/entity/cart-item.ts",
+      "bytes": 1288,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "domain/entity/shopping-cart.ts",
+      "bytes": 4539,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "domain/error/domain-error.ts",
+      "bytes": 195,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "domain/event/domain-event-publisher.ts",
+      "bytes": 146,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "domain/event/domain-event.ts",
+      "bytes": 740,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "domain/repository/shopping-cart-repository.ts",
+      "bytes": 238,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "domain/value/cart-id.ts",
+      "bytes": 659,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "domain/value/money.ts",
+      "bytes": 1788,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "domain/value/product-id.ts",
+      "bytes": 683,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "domain/value/product-name.ts",
+      "bytes": 699,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "domain/value/quantity.ts",
+      "bytes": 749,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "infrastructure/event/recording-domain-event-publisher.ts",
+      "bytes": 479,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "infrastructure/persistence/in-memory-shopping-cart-repository.ts",
+      "bytes": 704,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "main.ts",
+      "bytes": 1952,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "presentation/text-cart-view.ts",
+      "bytes": 1420,
+      "text": true,
+      "group": "source"
+    }
+  ],
+  "omitted": {
+    "size": 0,
+    "symlink": 0,
+    "secret": 0,
+    "web": 0,
+    "count": 0
+  }
+}
