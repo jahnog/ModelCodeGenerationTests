@@ -1,6 +1,6 @@
 [project]
 name = "modeltests"
-version = "0.1.0"
+version = "0.2.0"
 description = "Compare coding agents on one task under different architectural instructions."
 readme = "README.md"
 requires-python = ">=3.13"
