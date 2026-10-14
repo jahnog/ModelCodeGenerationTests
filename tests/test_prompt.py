@@ -42,7 +42,7 @@ def test_shipped_config_builds_prompts_from_the_file():
     assert plain.count("\n\n") == 1
     assert simple.text in styled
     assert styled.count("\n\n") == 2
-    assert len(cfg.cells()) == 48
+    assert len(cfg.cells()) == 16
 
 
 def test_duplicate_pre_date_slug_is_rejected(tmp_path):
