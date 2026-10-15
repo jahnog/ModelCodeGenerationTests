@@ -16,6 +16,12 @@ variants:
     model: grok-4.7
     effort: xhigh
     enabled: true
+  - id: claude-high
+    agent: claude
+    label: Claude Code
+    model: claude-sonnet-5-5
+    effort: high
+    enabled: true
   - id: claude-medium
     agent: claude
     label: Claude Code
