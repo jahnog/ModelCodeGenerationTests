@@ -22,6 +22,23 @@ def test_timeout_status_wins_over_a_nonzero_exit():
     assert attempt_status({"exit_code": 1}) == "error"
 
 
+def test_a_live_attempt_from_another_day_is_not_fresh(tmp_path):
+    _ws, cfg = load_project(tmp_path)
+    variant = cfg.enabled_variants()[0]
+    suffix = cfg.enabled_suffixes()[0]
+    meta = {
+        "source": "live",
+        "date": "2026-10-13",
+        "agent": variant.agent,
+        "model": variant.model,
+        "effort": variant.effort,
+        "task_text": cfg.task_text,
+        "constraints_text": cfg.constraints,
+        "suffix_text": suffix.text,
+    }
+    assert is_fresh(meta, cfg, variant.agent, variant.model, variant.effort, suffix.text, "2026-10-14") is False
+
+
 def test_fresh_compares_agent_model_and_effort(tmp_path):
     _ws, cfg = load_project(tmp_path)
     variant = cfg.enabled_variants()[0]

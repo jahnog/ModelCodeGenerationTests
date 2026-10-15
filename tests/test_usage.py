@@ -26,6 +26,19 @@ def test_grok_total_below_the_parts_keeps_the_sum():
     assert result["reported_model"] == "grok-4.7"
 
 
+def test_cli_total_equal_to_the_parts_keeps_the_sum():
+    result = grok_usage({"usage": {"input_tokens": 2, "output_tokens": 3, "total_tokens": 5}})
+    assert result["total_tokens"] == 5
+    assert result["total_tokens_source"] == "summed_parts"
+
+
+def test_a_boolean_token_count_stays_null():
+    result = normalize_usage({"usage": {"input_tokens": True, "output_tokens": 1}})
+    assert "input" not in result["token_parts"]
+    assert result["total_tokens"] == 1
+    assert result["total_tokens_source"] == "summed_parts"
+
+
 def test_cli_total_above_the_parts_is_kept():
     result = grok_usage({"usage": {"input_tokens": 1, "output_tokens": 1, "total_tokens": 100}})
     assert result["total_tokens"] == 100

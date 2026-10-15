@@ -1,6 +1,6 @@
 [project]
 name = "modeltests"
-version = "0.2.0"
+version = "0.3.0"
 description = "Compare coding agents on one task under different architectural instructions."
 readme = "README.md"
 requires-python = ">=3.13"
@@ -17,8 +17,23 @@ build-backend = "uv_build"
 
 [dependency-groups]
 dev = [
+    "coverage==7.16.2",
     "pytest>=9.1.1",
+    "pytest-gremlins==1.11.4",
 ]
 
 [tool.pytest.ini_options]
 pythonpath = ["tests"]
+
+[tool.coverage.run]
+include = ["src/modeltests/*"]
+relative_files = true
+
+[tool.coverage.xml]
+output = "coverage.xml"
+
+[tool.coverage.html]
+directory = "htmlcov"
+
+[tool.pytest-gremlins]
+paths = ["src/modeltests"]
