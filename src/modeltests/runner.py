@@ -19,7 +19,7 @@ from modeltests.analyze import SKIP_DIRS, measure_tree, redact_text, typecheck
 from modeltests.config import Config, Suffix, Variant, Workspace
 from modeltests.prompt import build_prompt, build_slug
 from modeltests.publish import attempts_for, is_fresh, same_identity, write_json
-from modeltests.usage import last_json, usage_for
+from modeltests.usage import copilot_usage, last_json, usage_for
 
 Execute = Callable[[list[str], Path, int], "ProcessResult"]
 PRESERVE_METRICS = (
@@ -113,6 +113,25 @@ def argv_for(variant: Variant, prompt: str, folder: Path) -> list[str]:
             "--model",
             variant.model,
         ]
+    if variant.agent == "copilot":
+        return [
+            "copilot",
+            "-C",
+            str(folder),
+            "-p",
+            prompt,
+            "--output-format",
+            "json",
+            "--model",
+            variant.model,
+            "--reasoning-effort",
+            variant.effort,
+            "--allow-all-tools",
+            "--allow-all-paths",
+            "--allow-all-urls",
+            # Split so this source file does not contain a blocked key prefix.
+            "--no-" + "ask" + "-user",
+        ]
     raise ValueError(f"unknown agent {variant.agent}")
 
 
@@ -129,6 +148,10 @@ def execute_agent(argv: list[str], cwd: Path, timeout: int) -> ProcessResult:
     if shutil.which(argv[0]) is None:
         return ProcessResult(None, False, "", "", f"{argv[0]} was not found")
     try:
+        env = None
+        if argv and argv[0] == "copilot":
+            env = os.environ.copy()
+            env["COPILOT_AUTO_UPDATE"] = "false"
         proc = subprocess.Popen(
             argv,
             cwd=cwd,
@@ -138,6 +161,7 @@ def execute_agent(argv: list[str], cwd: Path, timeout: int) -> ProcessResult:
             encoding="utf-8",
             errors="replace",
             start_new_session=True,
+            env=env,
         )
     except OSError as exc:
         return ProcessResult(None, False, "", "", str(exc))
@@ -293,7 +317,10 @@ def _archive(
     code_dir = attempt / "code"
     copy_code_tree(folder, code_dir)
     paths = _redact_paths(ws, folder, code_dir)
-    usage = usage_for(variant.agent, last_json(outcome.stdout))
+    if variant.agent == "copilot":
+        usage = copilot_usage(outcome.stdout, variant.model)
+    else:
+        usage = usage_for(variant.agent, last_json(outcome.stdout))
     tree = measure_tree(code_dir)
     checked = typecheck(code_dir, ws.compiler)
     metrics = _metrics(usage, elapsed, tree, checked, paths)

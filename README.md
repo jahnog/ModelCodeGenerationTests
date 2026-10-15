@@ -84,7 +84,7 @@ npm ci --prefix compiler
 
 ## Configuration
 
-Edit `config/benchmark.yaml`. Variants need an agent (`grok`, `claude`, or `cursor`), a model, and an effort. Suffixes need an id, a family, a label, and the instruction text. Set `enabled: false` to drop an entry from the run and from the page without deleting it. Publish again after a change.
+Edit `config/benchmark.yaml`. Variants need an agent (`grok`, `claude`, `cursor`, or `copilot`), a model, and an effort. Suffixes need an id, a family, a label, and the instruction text. Set `enabled: false` to drop an entry from the run and from the page without deleting it. Publish again after a change.
 
 ## GitHub Pages
 

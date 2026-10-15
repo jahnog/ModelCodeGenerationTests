@@ -1,0 +1,124 @@
+{
+  "slug": "copilot-gpt-6-1-sol-high-hexagonal-2026-10-15",
+  "variant_id": "copilot-high",
+  "suffix_id": "hexagonal",
+  "agent": "copilot",
+  "label": "GitHub Copilot",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "reported_model": "gpt-6.1-sol",
+  "family": "architecture",
+  "suffix_label": "Hexagonal",
+  "date": "2026-10-15",
+  "sample": false,
+  "stale": false,
+  "status": "complete",
+  "prompt": "Make a TypeScript program for a shopping cart. The program adds an item to the shopping cart. The program shows the items in the shopping cart. The program removes an item from the shopping cart.\n\nfollow hexagonal architecture.\n\nWrite every file in the current directory. Do not use sudo and do not change anything outside this directory.\nThe code must typecheck with TypeScript 7.0.2, strict, target ES2022, module ESNext, and moduleResolution bundler.\nWrite .ts files only. Do not write JSX. Do not import a package or a Node built-in module.\nA relative import does not need a file extension.\nPut an export in every .ts file so TypeScript treats the file as a module.",
+  "final_text": "Implemented in six `.ts` files using hexagonal architecture: domain model, ports, application service, in-memory repository, console adapter, and composition root.\n\n`main.ts` demonstrates adding, displaying, and removing items. Duplicate items combine quantities, and invalid operations raise explicit errors. Every file exports a module; no packages or Node built-ins are imported.",
+  "global_rules_present": true,
+  "total_time_seconds": 186.564,
+  "cli_duration_ms": 176026,
+  "total_tokens": 294386,
+  "total_tokens_source": "summed_parts",
+  "token_parts": {
+    "input": 36,
+    "output": 4516,
+    "cache_read": 264361,
+    "cache_write": 20516,
+    "reasoning": 4957
+  },
+  "cost_usd": 0.172528,
+  "turn_count": 12,
+  "final_text_chars": 382,
+  "compile_status": "pass",
+  "compile_error_count": 0,
+  "compile_seconds": 0.346,
+  "typescript_version": "7.0.2",
+  "diagnostics": [],
+  "compiler_options": [
+    "strict",
+    "target ES2022",
+    "module ESNext",
+    "moduleResolution bundler",
+    "noEmit",
+    "incremental false"
+  ],
+  "source_lines": 133,
+  "test_lines": 0,
+  "doc_lines": 0,
+  "file_count": 6,
+  "directory_count": 0,
+  "max_depth": 0,
+  "scans": {
+    "function": 2,
+    "class": 4,
+    "interface": 3,
+    "type": 7,
+    "enum": 0
+  },
+  "dependencies": [],
+  "dev_dependencies": [],
+  "checklist": {
+    "tests": false,
+    "readme": false,
+    "other_markdown": false,
+    "package_json": false,
+    "lockfile": false,
+    "tsconfig": false,
+    "eslint": false,
+    "prettier": false,
+    "ci": false,
+    "dockerfile": false
+  },
+  "top_dirs": [],
+  "names_found": [
+    "port"
+  ],
+  "imports": [],
+  "error_text": "",
+  "files": [
+    {
+      "path": "in-memory-cart-repository.ts",
+      "bytes": 401,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "main.ts",
+      "bytes": 722,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "shopping-cart-console.ts",
+      "bytes": 877,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "shopping-cart-ports.ts",
+      "bytes": 446,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "shopping-cart-service.ts",
+      "bytes": 644,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "shopping-cart.ts",
+      "bytes": 1520,
+      "text": true,
+      "group": "source"
+    }
+  ],
+  "omitted": {
+    "size": 0,
+    "symlink": 0,
+    "secret": 0,
+    "web": 0,
+    "count": 0
+  }
+}

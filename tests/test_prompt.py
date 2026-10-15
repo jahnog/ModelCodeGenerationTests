@@ -42,8 +42,13 @@ def test_shipped_config_builds_prompts_from_the_file():
     assert plain.count("\n\n") == 1
     assert simple.text in styled
     assert styled.count("\n\n") == 2
-    assert [item.id for item in cfg.enabled_variants()] == ["grok-xhigh", "claude-high"]
-    assert len(cfg.cells()) == 32
+    assert [item.id for item in cfg.enabled_variants()] == [
+        "grok-xhigh",
+        "claude-high",
+        "claude-opus-high",
+        "copilot-high",
+    ]
+    assert len(cfg.cells()) == 64
 
 
 def test_duplicate_pre_date_slug_is_rejected(tmp_path):

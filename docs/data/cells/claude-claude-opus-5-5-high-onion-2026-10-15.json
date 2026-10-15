@@ -1,0 +1,181 @@
+{
+  "slug": "claude-claude-opus-5-5-high-onion-2026-10-15",
+  "variant_id": "claude-opus-high",
+  "suffix_id": "onion",
+  "agent": "claude",
+  "label": "Claude Code",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "reported_model": "claude-opus-5-5",
+  "family": "architecture",
+  "suffix_label": "Onion",
+  "date": "2026-10-15",
+  "sample": false,
+  "stale": false,
+  "status": "complete",
+  "prompt": "Make a TypeScript program for a shopping cart. The program adds an item to the shopping cart. The program shows the items in the shopping cart. The program removes an item from the shopping cart.\n\nfollow onion architecture.\n\nWrite every file in the current directory. Do not use sudo and do not change anything outside this directory.\nThe code must typecheck with TypeScript 7.0.2, strict, target ES2022, module ESNext, and moduleResolution bundler.\nWrite .ts files only. Do not write JSX. Do not import a package or a Node built-in module.\nA relative import does not need a file extension.\nPut an export in every .ts file so TypeScript treats the file as a module.",
+  "final_text": "I wrote the shopping cart program as 15 `.ts` files under `src/`, organized in onion layers. It typechecks with TypeScript 7.0.2 using your settings, and the demo run adds, shows and removes items correctly.\n\n**Layers (dependencies only point inward):**\n\n| Layer | Files | Role |\n|---|---|---|\n| **Domain** (core) | `src/domain/CartItem.ts`, `ShoppingCart.ts`, `errors.ts`, `CartRepository.ts` | `CartItem` is a fixed value that checks its own fields. `ShoppingCart` is the only object that changes the item list. The `CartRepository` interface is defined here but implemented in an outer layer. Imports nothing from other layers. |\n| **Application** | `src/application/AddItemToCart.ts`, `ViewCart.ts`, `RemoveItemFromCart.ts`, `CartDto.ts`, `loadCart.ts`, `OutputPort.ts` | One class per action. Each returns plain data objects (`CartDto`), not domain objects. Depends only on the domain. |\n| **Infrastructure** | `src/infrastructure/InMemoryCartRepository.ts`, `ConsoleOutput.ts` | Implement the repository and output interfaces. |\n| **Presentation** | `src/presentation/CartController.ts`, `CartFormatter.ts` | Turns user actions into calls to the application layer and formats the output. Rule violations are shown as an error message; any other error is passed on. |\n| **Composition root** | `src/main.ts` | Connects the layers and runs a demo. |\n\n**Behaviour:**\n- Prices are whole cents, to avoid rounding errors.\n- Adding a product that's already in the cart increases its quantity.\n- Removing an item that isn't in the cart gives a clear error.\n\n**Choices to be aware of:**\n- `ConsoleOutput` reads `console` through `globalThis`, so it typechecks whether or not DOM or Node types are loaded.\n- There is no `tsconfig.json`, because you asked for `.ts` files only. You'll need to pass the compiler options yourself (see the end).\n\n**What I checked:**\n- **Typecheck:** `tsc` 7.0.2 passed with `--strict --target ES2022 --module ESNext --moduleResolution bundler`. It also passed with `--lib ES2022` (no DOM types) plus `verbatimModuleSyntax`, `erasableSyntaxOnly`, `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes` and the unused-code checks.\n- **Demo run:** I compiled and ran it with Node. It added apples, bread and milk (apples merged to quantity 5, total $8.97), removed the bread (total $6.48), then printed `Error: Item \"bread\" is not in the cart.` for the second removal.\n- **Exports:** every file has an export, and there are no package or Node built-in imports.\n- **Clean-up:** TypeScript and its npm cache went into a temporary `.tscheck/` folder inside this directory, which I deleted afterwards. Only `src/` is left; nothing is committed.\n\nTo typecheck it yourself:\n```\ntsc --strict --target ES2022 --module ESNext --moduleResolution bundler --noEmit src/**/*.ts\n```\n\nTo run it, use a bundler or a runner like `tsx`. The imports have no file extensions, so plain Node can't load the compiled output directly.",
+  "global_rules_present": true,
+  "total_time_seconds": 84.865,
+  "cli_duration_ms": 83691,
+  "total_tokens": 221509,
+  "total_tokens_source": "summed_parts",
+  "token_parts": {
+    "input": 14,
+    "output": 9610,
+    "cache_read": 186431,
+    "cache_write": 25454
+  },
+  "cost_usd": 0.4331742,
+  "turn_count": 7,
+  "final_text_chars": 2934,
+  "compile_status": "pass",
+  "compile_error_count": 0,
+  "compile_seconds": 0.364,
+  "typescript_version": "7.0.2",
+  "diagnostics": [],
+  "compiler_options": [
+    "strict",
+    "target ES2022",
+    "module ESNext",
+    "moduleResolution bundler",
+    "noEmit",
+    "incremental false"
+  ],
+  "source_lines": 319,
+  "test_lines": 0,
+  "doc_lines": 0,
+  "file_count": 15,
+  "directory_count": 5,
+  "max_depth": 2,
+  "scans": {
+    "function": 7,
+    "class": 11,
+    "interface": 10,
+    "type": 17,
+    "enum": 0
+  },
+  "dependencies": [],
+  "dev_dependencies": [],
+  "checklist": {
+    "tests": false,
+    "readme": false,
+    "other_markdown": false,
+    "package_json": false,
+    "lockfile": false,
+    "tsconfig": false,
+    "eslint": false,
+    "prettier": false,
+    "ci": false,
+    "dockerfile": false
+  },
+  "top_dirs": [
+    "src"
+  ],
+  "names_found": [
+    "domain",
+    "application",
+    "infrastructure"
+  ],
+  "imports": [],
+  "error_text": "",
+  "files": [
+    {
+      "path": "src/application/AddItemToCart.ts",
+      "bytes": 967,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "src/application/CartDto.ts",
+      "bytes": 726,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "src/application/OutputPort.ts",
+      "bytes": 120,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "src/application/RemoveItemFromCart.ts",
+      "bytes": 677,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "src/application/ViewCart.ts",
+      "bytes": 508,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "src/application/loadCart.ts",
+      "bytes": 369,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "src/domain/CartItem.ts",
+      "bytes": 1558,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "src/domain/CartRepository.ts",
+      "bytes": 269,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "src/domain/ShoppingCart.ts",
+      "bytes": 1470,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "src/domain/errors.ts",
+      "bytes": 341,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "src/infrastructure/ConsoleOutput.ts",
+      "bytes": 436,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "src/infrastructure/InMemoryCartRepository.ts",
+      "bytes": 799,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "src/main.ts",
+      "bytes": 1214,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "src/presentation/CartController.ts",
+      "bytes": 2026,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "src/presentation/CartFormatter.ts",
+      "bytes": 572,
+      "text": true,
+      "group": "source"
+    }
+  ],
+  "omitted": {
+    "size": 0,
+    "symlink": 0,
+    "secret": 0,
+    "web": 0,
+    "count": 0
+  }
+}
