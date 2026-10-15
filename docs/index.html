@@ -1,38 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="wl-page">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#050821">
   <title>Model tests</title>
+  <link rel="icon" href="favicon.ico" sizes="48x48">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="weblab.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="site-header">
-    <p class="eyebrow">Coding agents</p>
-    <h1>Model tests</h1>
-    <p id="task" class="task">One task, several agents, several instructions.</p>
-    <details id="constraints-wrap">
-      <summary>Constraints sent with every prompt</summary>
-      <pre id="constraints"></pre>
-    </details>
-    <nav class="views">
-      <a href="#/matrix" id="nav-matrix">Matrix</a>
-      <a href="#/table" id="nav-table">Table</a>
-    </nav>
-  </header>
-  <section id="controls" class="controls" hidden>
-    <label>Agent <select id="filter-agent"></select></label>
-    <label>Model <select id="filter-model"></select></label>
-    <label>Effort <select id="filter-effort"></select></label>
-    <label>Family <select id="filter-family"></select></label>
-    <label>Color <select id="color-metric">
-      <option value="source_lines">Lines</option>
-      <option value="total_time_seconds">Time</option>
-      <option value="total_tokens">Tokens</option>
-    </select></label>
-  </section>
-  <section id="strip" class="strip"></section>
-  <main id="view"></main>
+  <a class="skip-link wl-btn wl-btn-primary" href="#main">Skip to content</a>
+  <div class="wl-shell wl-fill">
+    <header class="wl-topbar">
+      <div class="wl-brand">
+        <p class="wl-kicker">Coding agents</p>
+        <h1 class="wl-title">Model tests</h1>
+        <p class="wl-subtitle">One task, several agents, several instructions.</p>
+      </div>
+      <nav class="wl-nav" aria-label="Site">
+        <a href="https://jahnog.github.io/">Portfolio</a>
+        <a href="https://jahnog.github.io/Model-Tests/">Write-up</a>
+        <a href="https://github.com/jahnog/ModelCodeGenerationTests">Source</a>
+      </nav>
+    </header>
+    <main class="wl-main" id="main">
+      <p id="task" class="wl-subtitle">One task, several agents, several instructions.</p>
+      <details id="constraints-wrap">
+        <summary>Constraints sent with every prompt</summary>
+        <pre id="constraints"></pre>
+      </details>
+      <nav class="wl-nav" aria-label="Views">
+        <a href="#/matrix" id="nav-matrix">Matrix</a>
+        <a href="#/table" id="nav-table">Table</a>
+      </nav>
+      <section id="controls" class="controls" hidden>
+        <label>Agent <select id="filter-agent"></select></label>
+        <label>Model <select id="filter-model"></select></label>
+        <label>Effort <select id="filter-effort"></select></label>
+        <label>Family <select id="filter-family"></select></label>
+        <label>Color <select id="color-metric">
+          <option value="source_lines">Lines</option>
+          <option value="total_time_seconds">Time</option>
+          <option value="total_tokens">Tokens</option>
+        </select></label>
+      </section>
+      <section id="strip" class="strip"></section>
+      <div id="view"></div>
+    </main>
+    <footer class="wl-footer">
+      <p>
+        Part of the portfolio at
+        <a href="https://jahnog.github.io/">jahnog.github.io</a>
+        ·
+        <a href="https://jahnog.github.io/Model-Tests/">Write-up</a>
+        ·
+        <a href="https://github.com/jahnog/ModelCodeGenerationTests">Source</a>
+      </p>
+    </footer>
+  </div>
   <script src="app.js"></script>
 </body>
 </html>
