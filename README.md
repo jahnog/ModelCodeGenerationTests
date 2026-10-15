@@ -88,7 +88,7 @@ Edit `config/benchmark.yaml`. Variants need an agent (`grok`, `claude`, or `curs
 
 ## GitHub Pages
 
-The site is the `docs/` folder. It has no build step. In the repository settings, set GitHub Pages to the `main` branch and the `/docs` folder. The public address is `https://<user>.github.io/<repo>/`. Pushing `main` updates the live site. No Actions workflow is required.
+The site is the `docs/` folder. It has no build step. GitHub Pages uses the `master` branch and the `/docs` folder. The public address is `https://jahnog.github.io/ModelCodeGenerationTests/`. `modeltests publish` rebuilds `docs/data` and `docs/code` on the machine that has `runs/`. Pushing `master` deploys that committed folder. No Actions workflow is required.
 
 `docs/data` and `docs/code` are generated. Generated code under `docs/code/` is marked linguist-generated.
 
