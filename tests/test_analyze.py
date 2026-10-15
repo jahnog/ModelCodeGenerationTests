@@ -69,6 +69,27 @@ def test_declaration_file_does_not_run_tsc(tmp_path, monkeypatch):
     assert result["compile_status"] == "no-typescript"
 
 
+def test_tsx_alone_fails_without_running_tsc(tmp_path, monkeypatch):
+    def boom(*_args, **_kwargs):
+        raise AssertionError("tsc should not run")
+
+    monkeypatch.setattr("modeltests.analyze._run_tsc", boom)
+    (tmp_path / "view.tsx").write_text("export const view = 1;\n", encoding="utf-8")
+    result = typecheck(tmp_path, COMPILER)
+    assert result["compile_status"] == "fail"
+    assert any("tsx" in line for line in result["diagnostics"])
+
+
+def test_typecheck_without_tsc_is_an_error(tmp_path):
+    code = tmp_path / "code"
+    code.mkdir()
+    (code / "cart.ts").write_text("export const answer = 1;\n", encoding="utf-8")
+    compiler = tmp_path / "compiler"
+    compiler.mkdir()
+    result = typecheck(code, compiler)
+    assert result["compile_status"] == "error"
+
+
 def test_tsx_forces_fail_even_when_ts_passes(tmp_path):
     (tmp_path / "ok.ts").write_text("export const answer = 1;\n", encoding="utf-8")
     (tmp_path / "view.tsx").write_text("export const view = 1;\n", encoding="utf-8")

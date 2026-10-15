@@ -2,6 +2,8 @@ import json
 import subprocess
 from pathlib import Path
 
+import pytest
+
 from modeltests.config import Variant
 from modeltests.publish import publish_site, read_json
 from modeltests.runner import (
@@ -27,6 +29,27 @@ def _fake_check(code_dir: Path, _compiler: Path, timeout: int = 60) -> dict:
         "diagnostics": [str(code_dir / "cart.ts") + "(1,1): error TS2322: no"],
         "compiler_options": ["strict"],
     }
+
+
+def test_agent_filter_drops_a_disabled_agent(tmp_path):
+    _ws, cfg = load_project(tmp_path)
+    matched = plan_cells(cfg, agent="grok")
+    assert matched
+    assert {variant.agent for variant, _suffix in matched} == {"grok"}
+    assert plan_cells(cfg, agent="claude") == []
+
+
+def test_unknown_agent_is_rejected():
+    variant = Variant("other", "other", "Other", "model", "medium", True)
+    with pytest.raises(ValueError, match="unknown agent"):
+        argv_for(variant, "prompt", Path("."))
+
+
+def test_missing_agent_is_a_result_not_a_timeout(tmp_path):
+    result = execute_agent(["modeltests-missing-agent-bin"], tmp_path, 5)
+    assert result.timed_out is False
+    assert result.exit_code is None
+    assert "modeltests-missing-agent-bin" in result.error_text
 
 
 def test_argv_passes_effort_only_for_grok_and_claude(tmp_path):

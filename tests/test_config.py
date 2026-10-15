@@ -61,6 +61,20 @@ def test_enabled_flag_stays_in_the_file_and_out_of_the_plan(tmp_path):
     assert [suffix.id for _variant, suffix in plan_cells(cfg, family="baseline")] == ["none", "simple"]
 
 
+def test_list_prints_enabled_cells_and_disabled_rows(tmp_path, capsys):
+    _ws, _cfg = load_project(tmp_path)
+    config = tmp_path / "config" / "benchmark.yaml"
+    assert main(["--config", str(config), "list"]) == 0
+    out = capsys.readouterr().out
+    assert "task shopping-cart" in out
+    assert "enabled cells: 2" in out
+    assert "Make a program." in out
+    assert "disabled variants:" in out
+    assert "paused" in out
+    assert "disabled suffixes:" in out
+    assert "parked" in out
+
+
 def test_cursor_effort_mismatch_warns_but_loads(tmp_path):
     text = config_text(
         """
