@@ -1,4 +1,4 @@
-"""Read token, cost, and turn figures from the three agent JSON shapes."""
+"""Read token, cost, and turn figures from the agent JSON shapes."""
 
 from __future__ import annotations
 
@@ -143,3 +143,118 @@ def usage_for(agent: str, obj: dict[str, Any] | None) -> dict[str, Any]:
     if agent == "cursor":
         return cursor_usage(obj)
     return grok_usage(obj)
+
+
+def _jsonl_objects(text: str) -> list[dict[str, Any]]:
+    found: list[dict[str, Any]] = []
+    for line in text.splitlines():
+        stripped = line.strip()
+        if not stripped.startswith("{"):
+            continue
+        try:
+            value = json.loads(stripped)
+        except json.JSONDecodeError:
+            continue
+        if isinstance(value, dict):
+            found.append(value)
+    return found
+
+
+def _at_least_zero(value: Any) -> int | float:
+    number = _number(value)
+    if number is None or number < 0:
+        return 0
+    return number
+
+
+def _metric_key(metrics: dict[str, Any], model: str, current: Any) -> str | None:
+    exact = [key for key in metrics if key == model]
+    if exact:
+        return exact[0]
+    prefixed = [key for key in metrics if key.startswith(model)]
+    if prefixed:
+        return prefixed[0]
+    if isinstance(current, str) and current in metrics:
+        return current
+    if len(metrics) == 1:
+        return next(iter(metrics))
+    return None
+
+
+def _metrics_payload(event: dict[str, Any]) -> dict[str, Any] | None:
+    """Return the object that holds modelMetrics. Prompt mode uses a checkpoint."""
+    data = event.get("data")
+    payload = data if isinstance(data, dict) else {}
+    kind = event.get("type")
+    if kind == "session.shutdown":
+        return payload
+    if kind == "session.usage_checkpoint":
+        snapshot = payload.get("accountingSnapshot")
+        if isinstance(snapshot, dict):
+            return snapshot
+    return None
+
+
+def copilot_usage(text: str, model: str) -> dict[str, Any]:
+    """Read a Copilot JSONL log. Cache and reasoning are split out of the totals."""
+    events = _jsonl_objects(text)
+    final: str | None = None
+    payload: dict[str, Any] | None = None
+    for event in events:
+        data = event.get("data")
+        body = data if isinstance(data, dict) else {}
+        if event.get("type") == "assistant.message":
+            content = body.get("content")
+            if isinstance(content, str):
+                final = content
+        candidate = _metrics_payload(event)
+        if isinstance(candidate, dict) and isinstance(candidate.get("modelMetrics"), dict):
+            payload = candidate
+    if payload is None:
+        usage = normalize_usage(events[-1] if events else None)
+        if usage["final_text"] is None:
+            usage["final_text"] = final
+        return usage
+    metrics = payload.get("modelMetrics")
+    chosen: dict[str, Any] | None = None
+    reported: str | None = None
+    if isinstance(metrics, dict) and metrics:
+        reported = _metric_key(metrics, model, payload.get("currentModel"))
+        if reported is not None and isinstance(metrics.get(reported), dict):
+            chosen = metrics[reported]
+    raw = chosen.get("usage") if isinstance(chosen, dict) else None
+    if not isinstance(raw, dict):
+        usage = normalize_usage(None)
+        usage["final_text"] = final
+        usage["reported_model"] = reported
+        return usage
+    # inputTokens already includes both cache buckets. outputTokens includes reasoning.
+    cache_read = _at_least_zero(raw.get("cacheReadTokens"))
+    cache_write = _at_least_zero(raw.get("cacheWriteTokens"))
+    reasoning = _at_least_zero(raw.get("reasoningTokens"))
+    uncached = _at_least_zero(_at_least_zero(raw.get("inputTokens")) - cache_read - cache_write)
+    visible = _at_least_zero(_at_least_zero(raw.get("outputTokens")) - reasoning)
+    parts: dict[str, int | float] = {}
+    for name, number in (
+        ("input", uncached),
+        ("output", visible),
+        ("cache_read", cache_read),
+        ("cache_write", cache_write),
+        ("reasoning", reasoning),
+    ):
+        if number:
+            parts[name] = number
+    requests = chosen.get("requests") if isinstance(chosen, dict) else None
+    turn_count = None
+    if isinstance(requests, dict):
+        turn_count = _number(requests.get("count"))
+    return {
+        "total_tokens": sum(parts.values()) if parts else 0,
+        "total_tokens_source": "summed_parts",
+        "token_parts": parts,
+        "cost_usd": None,
+        "turn_count": turn_count,
+        "cli_duration_ms": _number(payload.get("totalApiDurationMs")),
+        "reported_model": reported,
+        "final_text": final,
+    }

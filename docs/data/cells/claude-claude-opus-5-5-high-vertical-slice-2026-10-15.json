@@ -1,0 +1,129 @@
+{
+  "slug": "claude-claude-opus-5-5-high-vertical-slice-2026-10-15",
+  "variant_id": "claude-opus-high",
+  "suffix_id": "vertical-slice",
+  "agent": "claude",
+  "label": "Claude Code",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "reported_model": "claude-opus-5-5",
+  "family": "architecture",
+  "suffix_label": "Vertical slice",
+  "date": "2026-10-15",
+  "sample": false,
+  "stale": false,
+  "status": "complete",
+  "prompt": "Make a TypeScript program for a shopping cart. The program adds an item to the shopping cart. The program shows the items in the shopping cart. The program removes an item from the shopping cart.\n\nfollow vertical slice architecture.\n\nWrite every file in the current directory. Do not use sudo and do not change anything outside this directory.\nThe code must typecheck with TypeScript 7.0.2, strict, target ES2022, module ESNext, and moduleResolution bundler.\nWrite .ts files only. Do not write JSX. Do not import a package or a Node built-in module.\nA relative import does not need a file extension.\nPut an export in every .ts file so TypeScript treats the file as a module.",
+  "final_text": "I wrote the shopping cart program in `src/`, organized as vertical slices: each feature gets its own folder, and shared code is kept small and in one place.\n\n```\nsrc/\n  shared/\n    cart.ts       CartItem, CartStore interface, InMemoryCartStore\n    result.ts     Result<T> type with ok() / fail()\n    money.ts      formatCents()\n  features/\n    add-item/add-item.ts        addItem(store, command)\n    view-cart/view-cart.ts      viewCart(store), formatCart(view)\n    remove-item/remove-item.ts  removeItem(store, command)\n  main.ts         creates the store, runs a short demo\n```\n\n- **Add an item:** checks the id, name, price (whole cents, zero or more) and quantity (one or more). Adding a product that's already in the cart increases its quantity. It refuses the add if the price differs from the one already in the cart.\n- **Show the items:** builds a list of items with a total for each line, the number of items and the cart total, then prints it as text.\n- **Remove an item:** with no quantity it removes the whole line; with a quantity it removes that many. It fails clearly if the product isn't in the cart or you ask to remove more than it holds.\n- **Slices are independent:** no feature imports from another. Each one depends only on `shared/`, and `main.ts` is the only file that brings them together. Every file has an export, and it uses only relative imports with no extensions, no packages and no Node built-ins.\n\n**What I checked:** No TypeScript compiler is installed here, and installing one through `npx` would write outside this directory, so **I did not run the type check**. I ran a temporary copy with Node 24's built-in type stripping (it removes the types without checking them) and then deleted the copy. The demo output was correct: 5 apples and 1 bread for a total of $5.75. After removing 1 apple and the bread, it shows 4 apples for $2.00, and removing milk fails with a clear message.\n\n**What I assumed:** I wrote the code for strict mode and avoided `any`, enums and parameter properties. I expect it to pass the type check, but that's unverified. `console` comes from TypeScript's default libraries, which include DOM when no `lib` option is set. I didn't add a `tsconfig.json` because you asked for `.ts` files only. To type-check it:\n\n```\ntsc --noEmit --strict --target ES2022 --module ESNext --moduleResolution bundler src/**/*.ts\n```",
+  "global_rules_present": true,
+  "total_time_seconds": 60.701,
+  "cli_duration_ms": 58064,
+  "total_tokens": 118557,
+  "total_tokens_source": "summed_parts",
+  "token_parts": {
+    "input": 8,
+    "output": 5978,
+    "cache_read": 92150,
+    "cache_write": 20421
+  },
+  "cost_usd": 0.30139,
+  "turn_count": 4,
+  "final_text_chars": 2371,
+  "compile_status": "pass",
+  "compile_error_count": 0,
+  "compile_seconds": 0.324,
+  "typescript_version": "7.0.2",
+  "diagnostics": [],
+  "compiler_options": [
+    "strict",
+    "target ES2022",
+    "module ESNext",
+    "moduleResolution bundler",
+    "noEmit",
+    "incremental false"
+  ],
+  "source_lines": 174,
+  "test_lines": 0,
+  "doc_lines": 0,
+  "file_count": 7,
+  "directory_count": 6,
+  "max_depth": 3,
+  "scans": {
+    "function": 10,
+    "class": 1,
+    "interface": 7,
+    "type": 7,
+    "enum": 0
+  },
+  "dependencies": [],
+  "dev_dependencies": [],
+  "checklist": {
+    "tests": false,
+    "readme": false,
+    "other_markdown": false,
+    "package_json": false,
+    "lockfile": false,
+    "tsconfig": false,
+    "eslint": false,
+    "prettier": false,
+    "ci": false,
+    "dockerfile": false
+  },
+  "top_dirs": [
+    "src"
+  ],
+  "names_found": [],
+  "imports": [],
+  "error_text": "",
+  "files": [
+    {
+      "path": "src/features/add-item/add-item.ts",
+      "bytes": 1638,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "src/features/remove-item/remove-item.ts",
+      "bytes": 1349,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "src/features/view-cart/view-cart.ts",
+      "bytes": 1293,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "src/main.ts",
+      "bytes": 1269,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "src/shared/cart.ts",
+      "bytes": 894,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "src/shared/money.ts",
+      "bytes": 96,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "src/shared/result.ts",
+      "bytes": 285,
+      "text": true,
+      "group": "source"
+    }
+  ],
+  "omitted": {
+    "size": 0,
+    "symlink": 0,
+    "secret": 0,
+    "web": 0,
+    "count": 0
+  }
+}

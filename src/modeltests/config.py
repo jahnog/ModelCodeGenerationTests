@@ -14,8 +14,9 @@ from modeltests.prompt import slug_base
 SLUG = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 GROK_EFFORTS = {"none", "minimal", "low", "medium", "high", "xhigh", "max"}
 CLAUDE_EFFORTS = {"low", "medium", "high", "xhigh", "max"}
-EFFORT_WORDS = GROK_EFFORTS | CLAUDE_EFFORTS
-AGENTS = {"grok", "claude", "cursor"}
+COPILOT_EFFORTS = {"none", "minimal", "low", "medium", "high", "xhigh", "max"}
+EFFORT_WORDS = GROK_EFFORTS | CLAUDE_EFFORTS | COPILOT_EFFORTS
+AGENTS = {"grok", "claude", "cursor", "copilot"}
 
 
 class ConfigError(Exception):
@@ -191,7 +192,7 @@ def _variant(raw: object, index: int) -> Variant:
     identifier = _slug(raw.get("id"), f"variant {index} id")
     agent = raw.get("agent")
     if agent not in AGENTS:
-        raise ConfigError(f"variant {identifier} agent must be grok, claude, or cursor")
+        raise ConfigError(f"variant {identifier} agent must be grok, claude, cursor, or copilot")
     model = raw.get("model")
     effort = raw.get("effort")
     if not isinstance(model, str) or not model.strip():
@@ -202,6 +203,8 @@ def _variant(raw: object, index: int) -> Variant:
         raise ConfigError(f"variant {identifier} effort is not a Grok effort")
     if agent == "claude" and effort not in CLAUDE_EFFORTS:
         raise ConfigError(f"variant {identifier} effort is not a Claude effort")
+    if agent == "copilot" and effort not in COPILOT_EFFORTS:
+        raise ConfigError(f"variant {identifier} effort is not a Copilot effort")
     label = raw.get("label")
     if not isinstance(label, str) or not label.strip():
         label = identifier

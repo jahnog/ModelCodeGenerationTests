@@ -1,0 +1,98 @@
+{
+  "slug": "copilot-gpt-6-1-sol-high-typescript-2026-10-15",
+  "variant_id": "copilot-high",
+  "suffix_id": "typescript",
+  "agent": "copilot",
+  "label": "GitHub Copilot",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "reported_model": "gpt-6.1-sol",
+  "family": "baseline",
+  "suffix_label": "TypeScript",
+  "date": "2026-10-15",
+  "sample": false,
+  "stale": false,
+  "status": "complete",
+  "prompt": "Make a TypeScript program for a shopping cart. The program adds an item to the shopping cart. The program shows the items in the shopping cart. The program removes an item from the shopping cart.\n\nfollow typescript best practices.\n\nWrite every file in the current directory. Do not use sudo and do not change anything outside this directory.\nThe code must typecheck with TypeScript 7.0.2, strict, target ES2022, module ESNext, and moduleResolution bundler.\nWrite .ts files only. Do not write JSX. Do not import a package or a Node built-in module.\nA relative import does not need a file extension.\nPut an export in every .ts file so TypeScript treats the file as a module.",
+  "final_text": "Created two TypeScript files:\n\n- **`shopping-cart.ts`** \u2014 Reusable cart supporting add, list, remove, quantities, and totals, with validated inputs and integer-cent pricing.\n- **`main.ts`** \u2014 Runnable example demonstrating each operation and displaying the cart.\n\nBoth files are modules and use no packages or Node built-in imports.",
+  "global_rules_present": true,
+  "total_time_seconds": 174.289,
+  "cli_duration_ms": 163350,
+  "total_tokens": 302678,
+  "total_tokens_source": "summed_parts",
+  "token_parts": {
+    "input": 36,
+    "output": 4768,
+    "cache_read": 273604,
+    "cache_write": 20198,
+    "reasoning": 4072
+  },
+  "cost_usd": 0.166327,
+  "turn_count": 12,
+  "final_text_chars": 332,
+  "compile_status": "pass",
+  "compile_error_count": 0,
+  "compile_seconds": 0.344,
+  "typescript_version": "7.0.2",
+  "diagnostics": [],
+  "compiler_options": [
+    "strict",
+    "target ES2022",
+    "module ESNext",
+    "moduleResolution bundler",
+    "noEmit",
+    "incremental false"
+  ],
+  "source_lines": 98,
+  "test_lines": 0,
+  "doc_lines": 0,
+  "file_count": 2,
+  "directory_count": 0,
+  "max_depth": 0,
+  "scans": {
+    "function": 1,
+    "class": 1,
+    "interface": 2,
+    "type": 0,
+    "enum": 0
+  },
+  "dependencies": [],
+  "dev_dependencies": [],
+  "checklist": {
+    "tests": false,
+    "readme": false,
+    "other_markdown": false,
+    "package_json": false,
+    "lockfile": false,
+    "tsconfig": false,
+    "eslint": false,
+    "prettier": false,
+    "ci": false,
+    "dockerfile": false
+  },
+  "top_dirs": [],
+  "names_found": [],
+  "imports": [],
+  "error_text": "",
+  "files": [
+    {
+      "path": "main.ts",
+      "bytes": 1173,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "shopping-cart.ts",
+      "bytes": 2098,
+      "text": true,
+      "group": "source"
+    }
+  ],
+  "omitted": {
+    "size": 0,
+    "symlink": 0,
+    "secret": 0,
+    "web": 0,
+    "count": 0
+  }
+}

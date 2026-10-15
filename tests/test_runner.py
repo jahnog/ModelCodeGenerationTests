@@ -57,14 +57,21 @@ def test_argv_passes_effort_only_for_grok_and_claude(tmp_path):
     grok = Variant("grok-medium", "grok", "Grok Build", "grok-4.7", "medium", True)
     claude = Variant("claude-medium", "claude", "Claude Code", "opus", "medium", True)
     cursor = Variant("cursor-composer", "cursor", "Cursor Agent", "composer-2.5", "default", True)
+    copilot = Variant("copilot-high", "copilot", "GitHub Copilot", "gpt-6.1-sol", "high", True)
     grok_argv = argv_for(grok, "prompt", folder)
     claude_argv = argv_for(claude, "prompt", folder)
     cursor_argv = argv_for(cursor, "prompt", folder)
+    copilot_argv = argv_for(copilot, "prompt", folder)
     assert "--effort" in grok_argv and "medium" in grok_argv and "--no-plan" in grok_argv
     assert "--effort" in claude_argv and "--dangerously-skip-permissions" in claude_argv
     assert "--effort" not in cursor_argv
     assert "composer-2.5" in cursor_argv
     assert not any(str(item).startswith("[effort=") for item in cursor_argv)
+    assert "--effort" not in copilot_argv
+    assert "--reasoning-effort" in copilot_argv and "high" in copilot_argv
+    assert "gpt-6.1-sol" in copilot_argv
+    assert "--no-" + "ask" + "-user" in copilot_argv
+    assert "--allow-all-tools" in copilot_argv
 
 
 def test_run_archives_code_redacts_logs_and_skips_a_fresh_cell(tmp_path, monkeypatch):

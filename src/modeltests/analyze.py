@@ -12,7 +12,7 @@ import time
 from pathlib import Path
 from typing import Any
 
-SKIP_DIRS = {".git", "node_modules", "dist", ".grok", ".claude", ".cursor"}
+SKIP_DIRS = {".git", "node_modules", "dist", ".grok", ".claude", ".cursor", ".copilot"}
 NAME_WORDS = (
     "domain",
     "application",

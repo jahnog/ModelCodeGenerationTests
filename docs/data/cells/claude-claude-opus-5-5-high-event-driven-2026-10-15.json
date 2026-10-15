@@ -1,0 +1,117 @@
+{
+  "slug": "claude-claude-opus-5-5-high-event-driven-2026-10-15",
+  "variant_id": "claude-opus-high",
+  "suffix_id": "event-driven",
+  "agent": "claude",
+  "label": "Claude Code",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "reported_model": "claude-opus-5-5",
+  "family": "domain",
+  "suffix_label": "Event-driven",
+  "date": "2026-10-15",
+  "sample": false,
+  "stale": false,
+  "status": "complete",
+  "prompt": "Make a TypeScript program for a shopping cart. The program adds an item to the shopping cart. The program shows the items in the shopping cart. The program removes an item from the shopping cart.\n\nfollow an event-driven architecture.\n\nWrite every file in the current directory. Do not use sudo and do not change anything outside this directory.\nThe code must typecheck with TypeScript 7.0.2, strict, target ES2022, module ESNext, and moduleResolution bundler.\nWrite .ts files only. Do not write JSX. Do not import a package or a Node built-in module.\nA relative import does not need a file extension.\nPut an export in every .ts file so TypeScript treats the file as a module.",
+  "final_text": "I wrote an event-driven shopping cart in TypeScript as five `.ts` files in this directory. It typechecks with TypeScript 7.0.2 using your settings, and it runs.\n\n**How it works**\n\nEach part of the program talks to the others only by sending events:\n- **`events.ts`**: lists every event and what it carries. Some are requests (`AddItemRequested`, `RemoveItemRequested`, `ShowCartRequested`). The others are results that only the cart sends (`ItemAdded`, `ItemAddRejected`, `ItemRemoved`, `ItemRemoveRejected`, `CartShown`).\n- **`eventBus.ts`**: a typed publish/subscribe bus. Events are delivered in the order they're sent, including ones sent from inside a handler. Subscribing returns a function that unsubscribes.\n- **`cart.ts`**: `ShoppingCart` holds the cart contents. It listens for requests, checks them, updates the contents and sends a result event.\n  - Prices are stored in whole cents so totals add up exactly.\n  - Adding an item that's already in the cart increases its quantity.\n  - Removing takes the whole item out.\n- **`cartView.ts`**: turns result events into text. It never reads the cart directly.\n- **`main.ts`**: connects the parts and runs a demo that shows, adds, removes and shows again. It includes one invalid add and one remove of an item that isn't there.\n\n**What I checked**\n- **Typecheck:** I used a copy of TypeScript 7.0.2 already on this machine (in the npm cache) without writing anything. The code passes with `--strict --target ES2022 --module ESNext --moduleResolution bundler`. It also passes with only the ES2022 library, plus `--erasableSyntaxOnly`, `--noUncheckedIndexedAccess`, `--exactOptionalPropertyTypes` and `--noUnusedLocals`.\n- **Run:** I ran it with Node 24's built-in TypeScript support. Node needs file extensions on imports, so I added a small one-off resolver on the command line; nothing was written to disk. The output was correct: 5 apples and 1 bread came to $4.99, a quantity of 0 was rejected, and removing bread twice gave \"does not contain this item\" the second time.\n\n**Notes**\n- No package or Node module is imported, and the code doesn't depend on browser (DOM) or Node type definitions. `main.ts` finds `console` through `globalThis` when the program runs.\n- I didn't write a `tsconfig.json`, so you choose the settings when you compile.\n- Nothing is committed.",
+  "global_rules_present": true,
+  "total_time_seconds": 101.659,
+  "cli_duration_ms": 98407,
+  "total_tokens": 256885,
+  "total_tokens_source": "summed_parts",
+  "token_parts": {
+    "input": 16,
+    "output": 9829,
+    "cache_read": 221145,
+    "cache_write": 25895
+  },
+  "cost_usd": 0.44803299999999996,
+  "turn_count": 12,
+  "final_text_chars": 2326,
+  "compile_status": "pass",
+  "compile_error_count": 0,
+  "compile_seconds": 0.345,
+  "typescript_version": "7.0.2",
+  "diagnostics": [],
+  "compiler_options": [
+    "strict",
+    "target ES2022",
+    "module ESNext",
+    "moduleResolution bundler",
+    "noEmit",
+    "incremental false"
+  ],
+  "source_lines": 280,
+  "test_lines": 0,
+  "doc_lines": 0,
+  "file_count": 5,
+  "directory_count": 0,
+  "max_depth": 0,
+  "scans": {
+    "function": 6,
+    "class": 2,
+    "interface": 3,
+    "type": 11,
+    "enum": 0
+  },
+  "dependencies": [],
+  "dev_dependencies": [],
+  "checklist": {
+    "tests": false,
+    "readme": false,
+    "other_markdown": false,
+    "package_json": false,
+    "lockfile": false,
+    "tsconfig": false,
+    "eslint": false,
+    "prettier": false,
+    "ci": false,
+    "dockerfile": false
+  },
+  "top_dirs": [],
+  "names_found": [
+    "event"
+  ],
+  "imports": [],
+  "error_text": "",
+  "files": [
+    {
+      "path": "cart.ts",
+      "bytes": 2852,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "cartView.ts",
+      "bytes": 1801,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "eventBus.ts",
+      "bytes": 1599,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "events.ts",
+      "bytes": 1198,
+      "text": true,
+      "group": "source"
+    },
+    {
+      "path": "main.ts",
+      "bytes": 1537,
+      "text": true,
+      "group": "source"
+    }
+  ],
+  "omitted": {
+    "size": 0,
+    "symlink": 0,
+    "secret": 0,
+    "web": 0,
+    "count": 0
+  }
+}

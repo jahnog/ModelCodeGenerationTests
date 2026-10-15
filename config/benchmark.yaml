@@ -22,6 +22,18 @@ variants:
     model: claude-sonnet-5-5
     effort: high
     enabled: true
+  - id: claude-opus-high
+    agent: claude
+    label: Claude Code
+    model: claude-opus-5-5
+    effort: high
+    enabled: true
+  - id: copilot-high
+    agent: copilot
+    label: GitHub Copilot
+    model: gpt-6.1-sol
+    effort: high
+    enabled: true
   - id: claude-medium
     agent: claude
     label: Claude Code
